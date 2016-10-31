@@ -1,5 +1,6 @@
 package haoqu.com.push.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +12,11 @@ import android.view.View;
 
 import com.android.volley.VolleyError;
 
-import java.io.IOException;
-
 import haoqu.com.push.Consts;
 import haoqu.com.push.R;
+import haoqu.com.push.service.HeartBeatService;
 import haoqu.com.push.tools.VolleyListenerInterface;
 import haoqu.com.push.tools.VolleyRequestTool;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,24 +38,9 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 //                VolleyGetData();
+        //开启服务去后台,一直获取数据.
+        startService(new Intent(MainActivity.this, HeartBeatService.class));
 
-
-                OkHttpClient okHttpClient = new OkHttpClient();
-                final okhttp3.Request request = new okhttp3.Request.Builder()
-                        .url(Consts.baseUrl + Consts.appIndex + Consts.weid)
-                        .build();
-                Call call = okHttpClient.newCall(request);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.i(TAG, "onFailure: ");
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        Log.i(TAG, "onResponse: "+response.body().string());
-                    }
-                });
 
 
             }
