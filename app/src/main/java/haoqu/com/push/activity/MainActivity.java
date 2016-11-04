@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(android.R.drawable.ic_dialog_email);
+        toolbar.setNavigationIcon(R.drawable.ic_action_name);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
