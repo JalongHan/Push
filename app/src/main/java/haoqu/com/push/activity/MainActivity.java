@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,23 +25,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         initViews();
+        setListeners();
 
 
+    }
 
-
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_action_name);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    /**
+     * 设置监听
+     */
+    private void setListeners() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 //                VolleyGetData();
-        //开启服务去后台,一直获取数据.
-        startService(new Intent(MainActivity.this, HeartBeatService.class));
-
+                //开启服务去后台,一直获取数据.
+                startService(new Intent(MainActivity.this, HeartBeatService.class));
 
 
             }
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_action_name);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
 
