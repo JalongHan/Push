@@ -1,14 +1,19 @@
 package haoqu.com.push.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import haoqu.com.push.Consts;
 import haoqu.com.push.R;
 import haoqu.com.push.service.HeartBeatService;
 
@@ -17,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
     private FloatingActionButton fab;
+    //消息广播
+    private MsgReceiver mMsgReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +34,22 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setListeners();
 
+        initReceiver();
 
+
+
+    }
+
+    private void initReceiver() {
+        IntentFilter intentFilter = new IntentFilter(Consts.Msg);
+        mMsgReceiver = new MsgReceiver();
+        registerReceiver(mMsgReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mMsgReceiver);
     }
 
     /**
@@ -59,6 +81,16 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_action_name);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+
+    class MsgReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+                String result = intent.getStringExtra("heart");
+            Log.i(TAG, "onReceive: "+result);
+        }
     }
 
 

@@ -21,6 +21,7 @@ import java.util.TimerTask;
 import haoqu.com.push.Consts;
 import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
+import haoqu.com.push.TApplication;
 import haoqu.com.push.activity.MainActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -75,7 +76,7 @@ public class HeartBeatService extends Service{
 
                         String result = response.body().string();
                         Log.i("onResponse:", "onRespone: "+result);
-                        if (response.body() != null ) {
+                        if (result != null ) {
                             ActionMessageBean actionMessageBean = JSON.parseObject(result,ActionMessageBean.class);
 
                             //如果有通知内容,就解析发送通知栏通知.
@@ -97,6 +98,9 @@ public class HeartBeatService extends Service{
                             mNotificationManager.notify(0,mBuilder.build());
 
 
+                            Intent intent = new Intent(Consts.Msg);
+                            intent.putExtra("heart",result);
+                            TApplication.instance.sendBroadcast(intent);
 
 
 

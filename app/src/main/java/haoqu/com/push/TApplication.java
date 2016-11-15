@@ -42,6 +42,8 @@ public class TApplication extends Application {
         //设备的uuid
         UUID = getMyUUID();
 
+        instance = this;
+
     }
 
 

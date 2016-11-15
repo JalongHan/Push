@@ -21,7 +21,8 @@ public class Consts {
 
 
 
-
+    //service拿到消息后,发送消息actiong
+    public static final String Msg = "Msg";
     //退出登陆广播
     public static final String EXITACTION = "EXIT";
 }
