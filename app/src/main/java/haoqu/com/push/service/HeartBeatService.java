@@ -99,7 +99,7 @@ public class HeartBeatService extends Service{
 
 
                             Intent intent = new Intent(Consts.Msg);
-                            intent.putExtra("heart",result);
+                            intent.putExtra(Consts.Msg,result);
                             TApplication.instance.sendBroadcast(intent);
 
 

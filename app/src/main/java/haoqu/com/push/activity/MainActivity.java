@@ -37,13 +37,12 @@ public class MainActivity extends AppCompatActivity {
         initReceiver();
 
 
-
     }
 
     private void initReceiver() {
         IntentFilter intentFilter = new IntentFilter(Consts.Msg);
         mMsgReceiver = new MsgReceiver();
-        registerReceiver(mMsgReceiver,intentFilter);
+        registerReceiver(mMsgReceiver, intentFilter);
     }
 
     @Override
@@ -84,12 +83,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    class MsgReceiver extends BroadcastReceiver{
+    class MsgReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-                String result = intent.getStringExtra("heart");
-            Log.i(TAG, "onReceive: "+result);
+            String result = intent.getStringExtra(Consts.Msg);
+            Log.i(TAG, "onReceive: " + result);
         }
     }
 
