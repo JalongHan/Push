@@ -13,7 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+
+import java.util.List;
+
 import haoqu.com.push.Consts;
+import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
 import haoqu.com.push.service.HeartBeatService;
 
@@ -24,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     //消息广播
     private MsgReceiver mMsgReceiver;
+
+    private List<ActionMessageBean> mListActionMsg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra(Consts.Msg);
+            ActionMessageBean actionMessageBean = JSON.parseObject(result,ActionMessageBean.class);
+            mListActionMsg.add(actionMessageBean);
+
+
+
             Log.i(TAG, "onReceive: " + result);
         }
     }
