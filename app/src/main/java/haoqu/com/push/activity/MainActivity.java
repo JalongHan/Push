@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import haoqu.com.push.Consts;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mListActionMsg = new ArrayList<>();
         initViews();
         setListeners();
 
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_name);
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             String result = intent.getStringExtra(Consts.Msg);
             ActionMessageBean actionMessageBean = JSON.parseObject(result,ActionMessageBean.class);
             mListActionMsg.add(actionMessageBean);
-
+            
 
 
             Log.i(TAG, "onReceive: " + result);
