@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.Consts;
 import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
@@ -104,7 +105,16 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "onReceive: " + result);
         }
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

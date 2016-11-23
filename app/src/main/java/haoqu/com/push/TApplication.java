@@ -11,6 +11,8 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.UUID;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by apple on 16/9/14.
  */
@@ -35,6 +37,10 @@ public class TApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化jPush
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
+
 
          /* Volley配置 */
         // 建立Volley的Http请求队列
