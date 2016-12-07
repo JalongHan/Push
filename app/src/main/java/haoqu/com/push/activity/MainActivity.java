@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_action_name);
+        toolbar.setNavigationIcon(R.drawable.more);
         fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="haoqu.com.push.activity.ContentActivity">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/content_background">
+
+
+</RelativeLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+
+        <RelativeLayout
+            android:id="@+id/main_rl_personstore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/main_iv_personstore"
+                style="@style/main_button_iv"
+                android:src="@drawable/main_bt_personstore" />
+
+            <TextView
+                android:id="@+id/main_tv_personstore"
+                style="@style/main_button_tv"
+                android:layout_below="@id/main_iv_personstore"
+                android:text="@string/personstore" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_rl_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/main_iv_friends"
+                style="@style/main_button_iv"
+                android:src="@drawable/main_bt_friends" />
+
+            <TextView
+                android:id="@+id/main_tv_friends"
+                style="@style/main_button_tv"
+                android:layout_below="@id/main_iv_friends"
+                android:text="@string/paihang" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_rl_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/main_iv_store"
+                style="@style/main_button_iv"
+                android:src="@drawable/main_bt_mainstore" />
+
+            <TextView
+                android:id="@+id/main_tv_store"
+                style="@style/main_button_tv"
+                android:layout_below="@id/main_iv_store"
+                android:text="@string/shangcheng" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/main_rl_mycneter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/main_iv_mycneter"
+                style="@style/main_button_iv"
+
+                android:src="@drawable/main_bt_mycneter" />
+
+            <TextView
+                android:id="@+id/main_tv_mycneter"
+                style="@style/main_button_tv"
+                android:layout_below="@id/main_iv_mycneter"
+                android:text="@string/mycenter" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
