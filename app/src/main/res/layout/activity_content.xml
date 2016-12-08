@@ -6,102 +6,152 @@
     android:layout_height="match_parent"
     tools:context="haoqu.com.push.activity.ContentActivity">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/content_background">
-
-
-</RelativeLayout>
 
     <LinearLayout
-
+        android:id="@+id/bottom_button"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
 
         <RelativeLayout
             android:id="@+id/main_rl_personstore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/main_iv_personstore"
                 style="@style/main_button_iv"
-                android:src="@drawable/main_bt_personstore" />
+                android:src="@drawable/code" />
 
             <TextView
                 android:id="@+id/main_tv_personstore"
-                style="@style/main_button_tv"
-                android:layout_below="@id/main_iv_personstore"
-                android:text="@string/personstore" />
+                style="@style/main_button_tv" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/main_rl_friends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/main_iv_friends"
                 style="@style/main_button_iv"
-                android:src="@drawable/main_bt_friends" />
+                android:src="@drawable/delete" />
 
             <TextView
                 android:id="@+id/main_tv_friends"
-                style="@style/main_button_tv"
-                android:layout_below="@id/main_iv_friends"
-                android:text="@string/paihang" />
+                style="@style/main_button_tv" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/main_rl_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/main_iv_store"
                 style="@style/main_button_iv"
-                android:src="@drawable/main_bt_mainstore" />
+                android:src="@drawable/like" />
 
             <TextView
                 android:id="@+id/main_tv_store"
-                style="@style/main_button_tv"
-                android:layout_below="@id/main_iv_store"
-                android:text="@string/shangcheng" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/main_rl_mycneter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/main_iv_mycneter"
-                style="@style/main_button_iv"
-
-                android:src="@drawable/main_bt_mycneter" />
-
-            <TextView
-                android:id="@+id/main_tv_mycneter"
-                style="@style/main_button_tv"
-                android:layout_below="@id/main_iv_mycneter"
-                android:text="@string/mycenter" />
+                style="@style/main_button_tv" />
         </RelativeLayout>
 
 
     </LinearLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_button"
+        android:background="@drawable/content_blue_bg">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginRight="19dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/content_white_bg">
+
+            <ImageView
+                android:id="@+id/Content_imgTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_title" />
+
+            <TextView
+                android:id="@+id/Content_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Content_imgTitle"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="11dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Happy New Year"
+                android:textColor="@color/title_blue"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/Content_writer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Content_Title"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="HaoQuHuTong"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/Content_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/Content_Title"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:text="2016-11-29"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/Content_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/Content_writer"
+                android:layout_margin="15dp"
+                android:text="    My father was a self-taught mandolin player. He was one of the best string instrument players in our town. He could not read music, but if he heard a tune a few times, he could play it. When he was younger, he was a member of a small country music band. They would play at local dances and on a few occasions would play for the local radio station. He often told us how he had auditioned and earned a position in a band that featured Patsy Cline as their lead singer. He told the family that after he was hired he never went back. Dad was a very religious man. He stated that there was a lot of drinking and cursing the day of his audition and he did not want to be around that type of environment.
+
+            Occasionally, Dad would get out his mandolin and play for the family. We three children: Trisha, Monte and I, George Jr., would often sing along. Songs such as the Tennessee Waltz, Harbor Lights and around Christmas time, the well-known rendition of Silver Bells. , Silver Bells, its Christmas time in the city
+            house. One of Dad's favorite hymns was . We learned the words to
+            the hymn when we were very young, and would sing it with Dad when he would play and
+            sing. Another song that was often shared in our house was a song that accompanied the
+            Walt Disney series: Davey Crockett. Dad only had to hear the song twice before he
+            learned it well enough to play it.  Davey Crockett, King of the Wild Frontier"
+
+                android:textColor="@color/text_content"
+                android:textSize="14sp"
+                android:scrollbars="vertical"
+                />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

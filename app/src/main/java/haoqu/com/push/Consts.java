@@ -25,4 +25,8 @@ public class Consts {
     public static final String Msg = "Msg";
     //退出登陆广播
     public static final String EXITACTION = "EXIT";
+
+
+    public static final String EXTRA_ALERT = "EXTRA_ALERT";
+    public static final String KEY_MESSAGE = "KEY_MESSAGE";
 }

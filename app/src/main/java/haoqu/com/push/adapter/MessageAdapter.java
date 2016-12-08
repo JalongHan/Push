@@ -2,6 +2,7 @@ package haoqu.com.push.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
 
 /**
@@ -20,9 +20,10 @@ import haoqu.com.push.R;
 
 public class MessageAdapter extends RecyclerView.Adapter {
     private Context context;
-    private List<ActionMessageBean> actionMessageBean;
+    private List<String> actionMessageBean;
+    private String TAG = "MessageAdapter";
 
-    public MessageAdapter(List<ActionMessageBean> actionMessageBean, Context context) {
+    public MessageAdapter(List<String> actionMessageBean, Context context) {
         this.actionMessageBean = actionMessageBean;
         this.context = context;
     }
@@ -62,8 +63,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        String text = actionMessageBean.get(position).getError();
-
+        String text = actionMessageBean.get(position);
+        Log.i(TAG, "onBindViewHolder: "+text);
         ((viewHolder) holder).getTvMsg().setText(text);
 
     }

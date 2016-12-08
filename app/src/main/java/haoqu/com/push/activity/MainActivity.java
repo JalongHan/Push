@@ -7,13 +7,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.Consts;
 import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
-import haoqu.com.push.service.HeartBeatService;
+import haoqu.com.push.adapter.MessageAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,13 +34,17 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ActionMessageBean> mListActionMsg;
 
+    private List<String> mStringList;
+    private RecyclerView mReceyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private MessageAdapter mMessageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mListActionMsg = new ArrayList<>();
+        mStringList = new ArrayList<>();
         initViews();
         setListeners();
 
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initReceiver() {
-        IntentFilter intentFilter = new IntentFilter(Consts.Msg);
+        IntentFilter intentFilter = new IntentFilter(Consts.EXTRA_ALERT);
         mMsgReceiver = new MsgReceiver();
         registerReceiver(mMsgReceiver, intentFilter);
     }
@@ -72,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //                VolleyGetData();
                 //开启服务去后台,一直获取数据.
-                startService(new Intent(MainActivity.this, HeartBeatService.class));
+//                startService(new Intent(MainActivity.this, HeartBeatService.class));
+
+                startActivity(new Intent(MainActivity.this,ContentActivity.class));
 
 
             }
@@ -89,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.more);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        mReceyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        linearLayoutManager = new LinearLayoutManager(this);
+        mReceyclerView.setLayoutManager(linearLayoutManager);
+        mMessageAdapter = new MessageAdapter(mStringList,this);
+        mReceyclerView.setAdapter(mMessageAdapter);
+
     }
 
 
@@ -96,13 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String result = intent.getStringExtra(Consts.Msg);
-            ActionMessageBean actionMessageBean = JSON.parseObject(result,ActionMessageBean.class);
-            mListActionMsg.add(actionMessageBean);
-            
+            String alert = intent.getStringExtra(Consts.KEY_MESSAGE);
 
+            mStringList.add(alert);
+            mMessageAdapter.notifyDataSetChanged();
 
-            Log.i(TAG, "onReceive: " + result);
+            Log.i(TAG, "onReceive: " + alert);
         }
     }
     @Override
@@ -115,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         JPushInterface.onPause(this);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

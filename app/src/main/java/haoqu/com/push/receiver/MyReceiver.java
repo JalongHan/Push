@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
+import haoqu.com.push.Consts;
 
 /**
  * 注册我的广播接收器,接收极光推送来的消息
@@ -42,8 +43,8 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-
-            Log.d(TAG, "[MyReceiver] 接收到推送下来的   通知的ID: " + notifactionId+bundle.get(JPushInterface.EXTRA_ALERT));
+            processCustomMessage(context, bundle);
+            Log.d(TAG, "[MyReceiver] 接收到推送下来的   通知的ID: " + notifactionId + bundle.getString(JPushInterface.EXTRA_ALERT));
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
@@ -107,6 +108,17 @@ public class MyReceiver extends BroadcastReceiver {
 
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
+
+
+        String message = bundle.getString(JPushInterface.EXTRA_ALERT);
+        Log.i(TAG, "processCustomMessage: "+message);
+        Intent msgIntent = new Intent(Consts.EXTRA_ALERT);
+        msgIntent.putExtra(Consts.KEY_MESSAGE, message);
+
+
+        context.sendBroadcast(msgIntent);
+
+
 //        if (MainActivity.isForeground) {
 //            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 //            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
