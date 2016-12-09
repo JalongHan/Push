@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String alert = intent.getStringExtra(Consts.KEY_MESSAGE);
 
-            mStringList.add(alert);
+            mStringList.add(0,alert);
             mMessageAdapter.notifyDataSetChanged();
 
             Log.i(TAG, "onReceive: " + alert);

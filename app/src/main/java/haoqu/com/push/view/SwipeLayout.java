@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,12 +16,13 @@ import android.widget.FrameLayout;
  */
 
 public class SwipeLayout extends FrameLayout {
-    private final ViewDragHelper mDragHelper;
+    private ViewDragHelper mDragHelper;
     private View mBackView;
     private View mFrontView;
     private int mRange;
     private int mWidth;
     private int mHeight;
+    private final String TAG = "SwipeLayout";
 
     public SwipeLayout(Context context) {
         this(context, null);
@@ -36,6 +38,7 @@ public class SwipeLayout extends FrameLayout {
         //第一步,初始化ViewDragHelper
 
         ViewDragHelper.Callback mCallback = new ViewDragHelper.Callback() {
+            //确定哪个view可划动
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
                 return true;
@@ -94,7 +97,7 @@ public class SwipeLayout extends FrameLayout {
                 //兼容老版本
                 invalidate();
 
-                dispatchSwipeEvent();
+//                dispatchSwipeEvent();
 
 
             }
@@ -202,13 +205,15 @@ public class SwipeLayout extends FrameLayout {
         /**
          * 后view
          */
-        mBackView = getChildAt(0);
+        mBackView = getChildAt(1);
+        Log.i(TAG, "onFinishInflate:mBackView "+mBackView.getId());
 
 
         /**
          * 前view
          */
-        mFrontView = getChildAt(1);
+        mFrontView = getChildAt(0);
+        Log.i(TAG, "onFinishInflate:mFrontView "+mFrontView.getId());
     }
 
     /**
@@ -226,15 +231,17 @@ public class SwipeLayout extends FrameLayout {
          * 高度
          */
         mHeight = mFrontView.getMeasuredHeight();
+        Log.i(TAG, "onSizeChanged: "+mHeight);
         /**
          * 宽度
          */
         mWidth = mFrontView.getMeasuredWidth();
+        Log.i(TAG, "onSizeChanged: "+mWidth);
         /**
          * 移动距离
          */
         mRange = mBackView.getMeasuredWidth();
-
+        Log.i(TAG, "onSizeChanged: "+mRange);
 
     }
 
@@ -257,12 +264,12 @@ public class SwipeLayout extends FrameLayout {
     private void layoutContent(boolean isOpen) {
         //摆放前view
         Rect frontRect = computeFrontViewRect(isOpen);
-        mFrontView.layout(frontRect.left, frontRect.top, frontRect.right, frontRect.left);
+        mFrontView.layout(frontRect.left, frontRect.top, frontRect.right, frontRect.bottom);
         //摆放后view
         Rect backRect = computeBackViewRect(frontRect);
-        mFrontView.layout(backRect.left, backRect.top, backRect.right, backRect.left);
+        mBackView.layout(backRect.left, backRect.top, backRect.right, backRect.bottom);
         //前置前view
-        bringChildToFront(mFrontView);
+        bringChildToFront(mBackView);
 
     }
 
