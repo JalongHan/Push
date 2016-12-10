@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<haoqu.com.push.view.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="86dp">
-
-    <haoqu.com.push.view.SwipeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
 
 
 
@@ -18,65 +14,94 @@
                 android:id="@+id/headIcon"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
-                android:src="@drawable/headicon"
-                android:scaleType="centerCrop"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/headicon" />
 
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Minmiu123123123123123123123213123123123123213123123"
-                android:textColor="#333333"
-                android:textSize="16sp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="75dp"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="123qwe12qwasdasda123123123sdasdasdasdasdasdasdadasdasdasdasdsadsadsadsadasdasdasdasdasdasdasdasdasd"
-                android:textColor="#999999"
-                android:textSize="13sp"
-                android:layout_marginTop="3dp"
-                android:layout_below="@id/title"
-                android:layout_marginLeft="75dp"
-                android:maxLines="2"
-                android:ellipsize="end"/>
 
 
-            <ImageView
-                android:id="@+id/dot"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="#FF0000" />
+
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Minmiu123123123123123123123213123123123123213123123"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:layout_marginRight="55dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/Content_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="10 min"
+                    android:textColor="#CCCCCC"
+                    android:textSize="12sp"
+                    android:layout_alignBaseline="@id/title"
+                    android:layout_marginRight="13dp"
+
+                    />
+                <ImageView
+                    android:id="@+id/point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="17dp"
+                    android:src="@drawable/redpoint"
+                    android:layout_below="@id/title"
+                    android:layout_marginTop="4dp"
+                    />
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="123qwe12qwasdasda123123123sdasdasdasdasdasdasdadasdasdasdasdsadsadsadsadasdasdasdasdasdasdasdasdasd"
+                    android:textColor="#999999"
+                    android:textSize="13sp"
+                    android:layout_marginRight="38dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingExtra="5dp"
+                    />
+
+
+
+
 
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/swipeView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="标为已读" />
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="删除" />
 
         </LinearLayout>
 
-    </haoqu.com.push.view.SwipeLayout>
 
 
-</RelativeLayout>
+
+</haoqu.com.push.view.SwipeLayout>

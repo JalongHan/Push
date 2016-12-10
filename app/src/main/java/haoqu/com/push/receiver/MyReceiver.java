@@ -110,7 +110,7 @@ public class MyReceiver extends BroadcastReceiver {
     private void processCustomMessage(Context context, Bundle bundle) {
 
 
-        String message = bundle.getString(JPushInterface.EXTRA_ALERT);
+        String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
         Log.i(TAG, "processCustomMessage: "+message);
         Intent msgIntent = new Intent(Consts.EXTRA_ALERT);
         msgIntent.putExtra(Consts.KEY_MESSAGE, message);

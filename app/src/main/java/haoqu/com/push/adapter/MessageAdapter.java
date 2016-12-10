@@ -18,10 +18,23 @@ import haoqu.com.push.R;
  * Created by apple on 16/11/11.
  */
 
-public class MessageAdapter extends RecyclerView.Adapter {
+public class MessageAdapter extends RecyclerView.Adapter implements View.OnClickListener{
     private Context context;
     private List<String> actionMessageBean;
     private String TAG = "MessageAdapter";
+    private CallBack mCallBack;
+
+    @Override
+    public void onClick(View v) {
+        mCallBack.click(v);
+    }
+
+
+    public interface CallBack {
+        public void click(View v);
+    }
+
+
 
     public MessageAdapter(List<String> actionMessageBean, Context context) {
         this.actionMessageBean = actionMessageBean;
@@ -33,18 +46,18 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
 
         private TextView tvMsg;
-        private ImageView ivDot;
+        private ImageView ivPoint;
 
         public viewHolder(View itemView) {
             super(itemView);
             tvMsg = (TextView) itemView.findViewById(R.id.text);
-            ivDot = (ImageView) itemView.findViewById(R.id.dot);
+            ivPoint = (ImageView) itemView.findViewById(R.id.point);
 
         }
 
 
         public ImageView getIvDot() {
-            return ivDot;
+            return ivPoint;
         }
 
         public TextView getTvMsg() {

@@ -24,7 +24,7 @@ import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MessageAdapter.CallBack{
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -100,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
         mReceyclerView.setLayoutManager(linearLayoutManager);
         mMessageAdapter = new MessageAdapter(mStringList,this);
         mReceyclerView.setAdapter(mMessageAdapter);
+
+
+    }
+
+    @Override
+    public void click(View v) {
 
     }
 
