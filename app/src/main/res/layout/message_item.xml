@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <haoqu.com.push.view.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="86dp">
+    android:layout_height="86dp"
+    android:descendantFocusability="blocksDescendants">
 
 
 
         <RelativeLayout
             android:id="@+id/Content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
 
             <ImageView
                 android:id="@+id/headIcon"
@@ -87,14 +89,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:descendantFocusability="blocksDescendants">
 
             <Button
+                android:id="@+id/markedAsRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="标为已读" />
 
             <Button
+                android:id="@+id/deleteMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="删除" />

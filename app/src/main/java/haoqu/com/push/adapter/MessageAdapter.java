@@ -18,20 +18,19 @@ import haoqu.com.push.R;
  * Created by apple on 16/11/11.
  */
 
-public class MessageAdapter extends RecyclerView.Adapter implements View.OnClickListener{
+public class MessageAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<String> actionMessageBean;
     private String TAG = "MessageAdapter";
-    private CallBack mCallBack;
-
-    @Override
-    public void onClick(View v) {
-        mCallBack.click(v);
-    }
+    private MyItemClickListener mItemClickListener;
 
 
-    public interface CallBack {
-        public void click(View v);
+    /**
+     * 接口暴露给外面调用点击事件和item点击事件
+     */
+    public interface MyItemClickListener {
+//        void click(View v);
+        void OnItemClick(View v, int position);
     }
 
 
@@ -42,16 +41,20 @@ public class MessageAdapter extends RecyclerView.Adapter implements View.OnClick
     }
 
 
-    public class viewHolder extends RecyclerView.ViewHolder {
+
+    public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
 
 
         private TextView tvMsg;
         private ImageView ivPoint;
 
-        public viewHolder(View itemView) {
+        public viewHolder(View itemView,MyItemClickListener myItemClickListener) {
             super(itemView);
             tvMsg = (TextView) itemView.findViewById(R.id.text);
             ivPoint = (ImageView) itemView.findViewById(R.id.point);
+            mItemClickListener = myItemClickListener;
+            itemView.setOnClickListener(this);
+
 
         }
 
@@ -63,6 +66,21 @@ public class MessageAdapter extends RecyclerView.Adapter implements View.OnClick
         public TextView getTvMsg() {
             return tvMsg;
         }
+
+        /**
+         * 点击监听
+         * @param v
+         */
+        @Override
+        public void onClick(View v) {
+            mItemClickListener.OnItemClick(v,getPosition());
+        }
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
+        }
     }
 
 
@@ -71,7 +89,7 @@ public class MessageAdapter extends RecyclerView.Adapter implements View.OnClick
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, parent, false);
 
 
-        return new viewHolder(view);
+        return new viewHolder(view,mItemClickListener);
     }
 
     @Override
@@ -86,4 +104,16 @@ public class MessageAdapter extends RecyclerView.Adapter implements View.OnClick
     public int getItemCount() {
         return actionMessageBean.size();
     }
+
+    /**
+     * 设置Item点击监听
+     * @param listener
+     */
+    public void setOnItemClickListener(MyItemClickListener listener){
+        this.mItemClickListener = listener;
+    }
+
+
+
+
 }

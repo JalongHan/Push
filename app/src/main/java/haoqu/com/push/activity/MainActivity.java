@@ -20,11 +20,10 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.Consts;
-import haoqu.com.push.JSONModel.ActionMessageBean;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 
-public class MainActivity extends AppCompatActivity implements MessageAdapter.CallBack{
+public class MainActivity extends AppCompatActivity implements MessageAdapter.MyItemClickListener {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements MessageAdapter.Ca
     //消息广播
     private MsgReceiver mMsgReceiver;
 
-    private List<ActionMessageBean> mListActionMsg;
 
     private List<String> mStringList;
     private RecyclerView mReceyclerView;
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MessageAdapter.Ca
                 //开启服务去后台,一直获取数据.
 //                startService(new Intent(MainActivity.this, HeartBeatService.class));
 
-                startActivity(new Intent(MainActivity.this,ContentActivity.class));
+                startActivity(new Intent(MainActivity.this, ContentActivity.class));
 
 
             }
@@ -95,18 +93,18 @@ public class MainActivity extends AppCompatActivity implements MessageAdapter.Ca
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.more);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        mReceyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        mReceyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         mReceyclerView.setLayoutManager(linearLayoutManager);
-        mMessageAdapter = new MessageAdapter(mStringList,this);
+        mMessageAdapter = new MessageAdapter(mStringList, this);
         mReceyclerView.setAdapter(mMessageAdapter);
-
+        mMessageAdapter.setOnItemClickListener(this);
 
     }
 
     @Override
-    public void click(View v) {
-
+    public void OnItemClick(View v, int position) {
+        startActivity(new Intent(this,ContentActivity.class));
     }
 
 
@@ -116,17 +114,19 @@ public class MainActivity extends AppCompatActivity implements MessageAdapter.Ca
         public void onReceive(Context context, Intent intent) {
             String alert = intent.getStringExtra(Consts.KEY_MESSAGE);
 
-            mStringList.add(0,alert);
+            mStringList.add(0, alert);
             mMessageAdapter.notifyDataSetChanged();
 
             Log.i(TAG, "onReceive: " + alert);
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
