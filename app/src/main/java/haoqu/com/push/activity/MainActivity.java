@@ -22,8 +22,9 @@ import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.Consts;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
+import haoqu.com.push.listener.MsgItemClickListener;
 
-public class MainActivity extends AppCompatActivity implements MessageAdapter.MyItemClickListener {
+public class MainActivity extends AppCompatActivity implements MsgItemClickListener {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -99,12 +100,31 @@ public class MainActivity extends AppCompatActivity implements MessageAdapter.My
         mMessageAdapter = new MessageAdapter(mStringList, this);
         mReceyclerView.setAdapter(mMessageAdapter);
         mMessageAdapter.setOnItemClickListener(this);
+        
+//        mReceyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//            @Override
+//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//                Log.i(TAG, "onInterceptTouchEvent: ");
+//                return true;
+//            }
+//
+//            @Override
+//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//                Log.i(TAG, "onTouchEvent: ");
+//
+//            }
+//
+//            @Override
+//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//                Log.i(TAG, "onRequestDisallowInterceptTouchEvent: ");
+//            }
+//        });
 
     }
 
     @Override
-    public void OnItemClick(View v, int position) {
-        startActivity(new Intent(this,ContentActivity.class));
+    public void onItemClick(View view, int position) {
+        Log.i(TAG, "onItemClick: "+position);
     }
 
 

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<haoqu.com.push.view.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="86dp"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="wrap_content"
 
+    >
 
+    <haoqu.com.push.view.SwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp">
 
         <RelativeLayout
             android:id="@+id/Content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:descendantFocusability="blocksDescendants">
+            >
 
             <ImageView
                 android:id="@+id/headIcon"
@@ -26,57 +29,57 @@
 
 
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Minmiu123123123123123123123213123123123123213123123"
-                    android:textColor="#333333"
-                    android:textSize="16sp"
-                    android:layout_marginRight="55dp"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Minmiu123123123123123123123213123123123123213123123"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:layout_marginRight="55dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/Content_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="10 min"
-                    android:textColor="#CCCCCC"
-                    android:textSize="12sp"
-                    android:layout_alignBaseline="@id/title"
-                    android:layout_marginRight="13dp"
+            <TextView
+                android:id="@+id/Content_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="10 min"
+                android:textColor="#CCCCCC"
+                android:textSize="12sp"
+                android:layout_alignBaseline="@id/title"
+                android:layout_marginRight="13dp"
 
-                    />
-                <ImageView
-                    android:id="@+id/point"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="17dp"
-                    android:src="@drawable/redpoint"
-                    android:layout_below="@id/title"
-                    android:layout_marginTop="4dp"
-                    />
+                />
+            <ImageView
+                android:id="@+id/point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:src="@drawable/redpoint"
+                android:layout_below="@id/title"
+                android:layout_marginTop="4dp"
+                />
 
-                <TextView
-                    android:id="@+id/text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/title"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="123qwe12qwasdasda123123123sdasdasdasdasdasdasdadasdasdasdasdsadsadsadsadasdasdasdasdasdasdasdasdasd"
-                    android:textColor="#999999"
-                    android:textSize="13sp"
-                    android:layout_marginRight="38dp"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginTop="5dp"
-                    android:lineSpacingExtra="5dp"
-                    />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="123qwe12qwasdasda123123123sdasdasdasdasdasdasdadasdasdasdasdsadsadsadsadasdasdasdasdasdasdasdasdasd"
+                android:textColor="#999999"
+                android:textSize="13sp"
+                android:layout_marginRight="38dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="5dp"
+                android:lineSpacingExtra="5dp"
+                />
 
 
 
@@ -90,7 +93,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:descendantFocusability="blocksDescendants">
+            >
 
             <Button
                 android:id="@+id/markedAsRead"
@@ -108,5 +111,11 @@
 
 
 
+    </haoqu.com.push.view.SwipeLayout>
 
-</haoqu.com.push.view.SwipeLayout>
+
+
+
+
+
+</RelativeLayout>
