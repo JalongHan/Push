@@ -6,6 +6,7 @@
     >
 
     <haoqu.com.push.view.SwipeLayout
+        android:id="@+id/SwipeLayout"
         android:layout_width="match_parent"
         android:layout_height="86dp">
 
@@ -13,6 +14,7 @@
             android:id="@+id/Content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             >
 
             <ImageView

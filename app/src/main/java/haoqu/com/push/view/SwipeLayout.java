@@ -108,6 +108,17 @@ public class SwipeLayout extends FrameLayout {
 
             }
 
+            @Override
+            public int getViewHorizontalDragRange(View child) {
+                return getMeasuredWidth() - child.getMeasuredWidth();
+            }
+
+            @Override
+            public int getViewVerticalDragRange(View child) {
+                return getMeasuredHeight() - child.getMeasuredHeight();
+            }
+
+
             /**
              * 拖拽view释放的时候  实现以下滑动的距离和速度【判断是否打开和关闭
              * @param releasedChild
@@ -164,9 +175,8 @@ public class SwipeLayout extends FrameLayout {
             }
 
 
-
         };
-        mDragHelper = ViewDragHelper.create(this, mCallback);
+        mDragHelper = ViewDragHelper.create(this,1.0f, mCallback);
     }
 
 
@@ -201,41 +211,41 @@ public class SwipeLayout extends FrameLayout {
             e.printStackTrace();
         }
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Log.i(TAG, "onTouchEvent: down");
-                DownX = event.getX();//float DownX
-                DownY = event.getY();//float DownY
-                moveX = 0;
-                moveY = 0;
-                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                Log.i(TAG, "onTouchEvent: down");
+//                DownX = event.getX();//float DownX
+//                DownY = event.getY();//float DownY
+//                moveX = 0;
+//                moveY = 0;
+//                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
+//
+//
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                Log.i(TAG, "onTouchEvent: move");
+//                moveX += Math.abs(event.getX() - DownX);//X轴距离
+//                moveY += Math.abs(event.getY() - DownY);//y轴距离
+//                DownX = event.getX();
+//                DownY = event.getY();
+//                return false;
+////                break;
+//            case MotionEvent.ACTION_UP:
+//                Log.i(TAG, "onTouchEvent: up");
+//                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
+//                //判断是否继续传递信号
+//                if (moveTime < 200 && (moveX < 20 || moveY < 20)) {
+//                    Log.i(TAG, "onTouchEvent: return false");
+//                    return false; //不再执行后面的事件，在这句前可写要执行的触摸相关代码。点击事件是发生在触摸弹起后
+//
+//                }
+//
+//                break;
+//        }
 
 
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.i(TAG, "onTouchEvent: move");
-                moveX += Math.abs(event.getX() - DownX);//X轴距离
-                moveY += Math.abs(event.getY() - DownY);//y轴距离
-                DownX = event.getX();
-                DownY = event.getY();
-
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.i(TAG, "onTouchEvent: up");
-                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
-                //判断是否继续传递信号
-                if (moveTime < 200 && (moveX < 20 || moveY < 20)) {
-                    Log.i(TAG, "onTouchEvent: return false");
-                    return false; //不再执行后面的事件，在这句前可写要执行的触摸相关代码。点击事件是发生在触摸弹起后
-
-                }
-
-                break;
-        }
-
-
-            //返回true,这里表示去拦截事件
-        Log.i(TAG, "onTouchEvent: 还是走到了return true");
+//        返回true,这里表示去拦截事件
+//        Log.i(TAG, "onTouchEvent: 还是走到了return true");
         return true;
     }
 
