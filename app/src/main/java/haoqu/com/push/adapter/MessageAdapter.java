@@ -11,6 +11,7 @@ import java.util.List;
 
 import haoqu.com.push.R;
 import haoqu.com.push.listener.MsgItemClickListener;
+import haoqu.com.push.listener.MsgItemOnTouchListener;
 import haoqu.com.push.viewholder.MsgViewHolder;
 
 /**
@@ -24,6 +25,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private String TAG = "MessageAdapter";
 
     private MsgItemClickListener mMsgItemClickListener;
+    private MsgItemOnTouchListener mMsgItemOnTouchListener;
 
 
 
@@ -64,6 +66,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
      */
     public void setOnItemClickListener(MsgItemClickListener listener){
         this.mMsgItemClickListener = listener;
+    }
+
+    public void setItemOnTouchListener(MsgItemOnTouchListener listener){
+        this.mMsgItemOnTouchListener = listener;
     }
 
 }

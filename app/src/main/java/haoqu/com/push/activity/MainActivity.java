@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,9 @@ import haoqu.com.push.Consts;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 import haoqu.com.push.listener.MsgItemClickListener;
+import haoqu.com.push.listener.MsgItemOnTouchListener;
 
-public class MainActivity extends AppCompatActivity implements MsgItemClickListener {
+public class MainActivity extends AppCompatActivity implements MsgItemClickListener, MsgItemOnTouchListener {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -37,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private RecyclerView mReceyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter mMessageAdapter;
+
+    private float DownX;
+    private float DownY;
+    private float moveX;
+    private float moveY;
+    private long currentMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         mMessageAdapter = new MessageAdapter(mStringList, this);
         mReceyclerView.setAdapter(mMessageAdapter);
         mMessageAdapter.setOnItemClickListener(this);
-        
+        mMessageAdapter.setItemOnTouchListener(this);
+
 //        mReceyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 //            @Override
 //            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -124,7 +134,46 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     @Override
     public void onItemClick(View view, int position) {
-        Log.i(TAG, "onItemClick: "+position);
+        Log.i(TAG, "onItemClick: " + position);
+    }
+
+    @Override
+    public void ItemOnTouch(View v, int position, MotionEvent event) {
+        Log.i(TAG, "onTouch: itemView");
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.i(TAG, "onTouchEvent: down");
+                DownX = event.getX();//float DownX
+                DownY = event.getY();//float DownY
+                moveX = 0;
+                moveY = 0;
+                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
+
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.i(TAG, "onTouchEvent: move");
+                moveX += Math.abs(event.getX() - DownX);//X轴距离
+                moveY += Math.abs(event.getY() - DownY);//y轴距离
+                DownX = event.getX();
+                DownY = event.getY();
+//                return false;
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.i(TAG, "onTouchEvent: up");
+                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
+                //判断是否继续传递信号
+                if (moveTime < 200 && (moveX < 20 || moveY < 20)) {
+                    Log.i(TAG, "onTouchEvent: return false");
+                   Toast.makeText(this,"点进下一页", Toast.LENGTH_LONG).show();
+//                            return true; //不再执行后面的事件，在这句前可写要执行的触摸相关代码。点击事件是发生在触摸弹起后
+
+                }
+
+                break;
+        }
+
+
     }
 
 
@@ -139,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
             Log.i(TAG, "onReceive: " + alert);
         }
+
     }
 
     @Override
