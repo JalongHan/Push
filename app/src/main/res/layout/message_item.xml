@@ -100,13 +100,13 @@
             <Button
                 android:id="@+id/markedAsRead"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="标为已读" />
 
             <Button
                 android:id="@+id/deleteMsg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="删除" />
 
         </LinearLayout>

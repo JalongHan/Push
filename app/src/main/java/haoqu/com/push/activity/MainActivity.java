@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private float DownY;
     private float moveX;
     private float moveY;
-    private long currentMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
 
         });
+
+        mMessageAdapter.setOnItemClickListener(this);
+        mMessageAdapter.setItemOnTouchListener(this);
+
     }
 
     /**
@@ -108,27 +110,8 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         mReceyclerView.setLayoutManager(linearLayoutManager);
         mMessageAdapter = new MessageAdapter(mStringList, this);
         mReceyclerView.setAdapter(mMessageAdapter);
-        mMessageAdapter.setOnItemClickListener(this);
-        mMessageAdapter.setItemOnTouchListener(this);
 
-//        mReceyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-//            @Override
-//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-//                Log.i(TAG, "onInterceptTouchEvent: ");
-//                return true;
-//            }
-//
-//            @Override
-//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-//                Log.i(TAG, "onTouchEvent: ");
-//
-//            }
-//
-//            @Override
-//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-//                Log.i(TAG, "onRequestDisallowInterceptTouchEvent: ");
-//            }
-//        });
+
 
     }
 
@@ -147,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
                 DownY = event.getY();//float DownY
                 moveX = 0;
                 moveY = 0;
-                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
+//                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
 
 
                 break;
@@ -161,11 +144,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
                 break;
             case MotionEvent.ACTION_UP:
                 Log.i(TAG, "onTouchEvent: up");
-                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
+//                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
                 //判断是否继续传递信号
-                if (moveTime < 200 && (moveX < 20 || moveY < 20)) {
+                if (moveX < 20 && moveY < 20) {
                     Log.i(TAG, "onTouchEvent: return false");
-                   Toast.makeText(this,"点进下一页", Toast.LENGTH_LONG).show();
+                   startActivity(new Intent(MainActivity.this,ContentActivity.class));
 //                            return true; //不再执行后面的事件，在这句前可写要执行的触摸相关代码。点击事件是发生在触摸弹起后
 
                 }

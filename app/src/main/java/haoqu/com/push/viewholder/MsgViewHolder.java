@@ -43,7 +43,7 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
     private MsgItemClickListener mMsgItemClickListener;
     private MsgItemOnTouchListener mMsgItemOnTouchListener;
 
-    public MsgViewHolder(View itemView, MsgItemClickListener msgItemClickListener) {
+    public MsgViewHolder(View itemView, MsgItemClickListener msgItemClickListener ,MsgItemOnTouchListener mMsgItemOnTouchListener) {
         super(itemView);
         mHeadIcon = (ImageView) itemView.findViewById(R.id.headIcon);
         mTitle = (TextView) itemView.findViewById(R.id.title);
@@ -56,10 +56,10 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
         mSwipeView = (LinearLayout) itemView.findViewById(R.id.swipeView);
         mSwipeLayout = (SwipeLayout) itemView.findViewById(R.id.SwipeLayout);
         this.mMsgItemClickListener = msgItemClickListener;
-
+        this.mMsgItemOnTouchListener = mMsgItemOnTouchListener;
         mDeleteMsg.setOnClickListener(this);
         mMarkedAsRead.setOnClickListener(this);
-        itemView.setOnClickListener(this);
+        mSwipeLayout.setOnTouchListener(this);
 //        mSwipeLayout.setOnTouchListener(this);
 //        mSwipeLayout.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
