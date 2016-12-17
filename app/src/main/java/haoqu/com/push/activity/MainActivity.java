@@ -21,6 +21,7 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.Consts;
+import haoqu.com.push.JSONModel.MsgBean;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 import haoqu.com.push.listener.MsgItemClickListener;
@@ -168,9 +169,18 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
             mStringList.add(0, alert);
             mMessageAdapter.notifyDataSetChanged();
-
+            saveMsg(alert);
             Log.i(TAG, "onReceive: " + alert);
         }
+
+    }
+
+    private void saveMsg(String alert) {
+
+        MsgBean msgBean = new MsgBean();
+        msgBean.setContent(alert);
+        msgBean.setMark(false);
+        msgBean.save();
 
     }
 

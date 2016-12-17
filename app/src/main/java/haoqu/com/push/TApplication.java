@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.UUID;
 
@@ -47,7 +49,7 @@ public class TApplication extends Application {
         HttpQueue = Volley.newRequestQueue(getApplicationContext());
         //设备的uuid
         UUID = getMyUUID();
-
+        FlowManager.init(new FlowConfig.Builder(this).build());
         instance = this;
 
     }
