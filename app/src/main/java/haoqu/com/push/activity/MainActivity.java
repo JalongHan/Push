@@ -175,6 +175,10 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     }
 
+    /**
+     * 保存到数据库
+     * @param alert
+     */
     private void saveMsg(String alert) {
 
         MsgBean msgBean = new MsgBean();

@@ -12,12 +12,23 @@ import haoqu.com.push.datebase.MsgDateBase;
  */
 @Table(database = MsgDateBase.class)
 public class MsgBean extends BaseModel {
+
     @PrimaryKey(autoincrement = true)
-    Long id;
+    private Long id;
     @Column
-    String content;
-    @Column
-    Boolean mark;
+    private String content;
+    //是否未读,当值为空时,默认给值1代表true,表示未读状态
+    @Column(defaultValue = "1")
+    private Boolean mark;
+
+
+    public MsgBean() {
+    }
+
+    public MsgBean(String content, Boolean mark) {
+        this.content = content;
+        this.mark = mark;
+    }
 
     public String getContent() {
         return content;
@@ -25,14 +36,6 @@ public class MsgBean extends BaseModel {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Boolean getMark() {
