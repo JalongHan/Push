@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import haoqu.com.push.status.SwipeLayoutStatus;
+
 /**
  * 侧滑弹出的界面
  * Created by apple on 16/11/14.
@@ -132,48 +134,48 @@ public class SwipeLayout extends FrameLayout {
             }
 
 
-            //关闭
-            private void close() {
-                close(true);
-            }
 
-            //实现以下平滑的关闭和打开
-            private void close(boolean isSmooth) {
-                int finalLeft = 0;
-                if (isSmooth) {
-                    //开始动画 如果返回true表示没有完成动画
-                    if (mDragHelper.smoothSlideViewTo(mFrontView, finalLeft, 0)) {
-                        ViewCompat.postInvalidateOnAnimation(SwipeLayout.this);
-
-                    }
-                } else {
-                    layoutContent(false);
-                }
-            }
-
-            //打开
-            private void open() {
-                open(true);
-            }
-
-            private void open(boolean isSmooth) {
-                int finalLeft = -mRange;
-                if (isSmooth) {
-                    //开始动画
-                    if (mDragHelper.smoothSlideViewTo(mFrontView, finalLeft, 0)) {
-                        ViewCompat.postInvalidateOnAnimation(SwipeLayout.this);
-                    }
-                } else {
-                    layoutContent(true);
-                }
-
-            }
 
 
         };
         mDragHelper = ViewDragHelper.create(this, mCallback);
     }
+    //关闭
+    private void close() {
+        close(true);
+    }
 
+    //实现以下平滑的关闭和打开
+    public void close(boolean isSmooth) {
+        int finalLeft = 0;
+        if (isSmooth) {
+            //开始动画 如果返回true表示没有完成动画
+            if (mDragHelper.smoothSlideViewTo(mFrontView, finalLeft, 0)) {
+                ViewCompat.postInvalidateOnAnimation(SwipeLayout.this);
+
+            }
+        } else {
+            layoutContent(false);
+        }
+    }
+
+    //打开
+    private void open() {
+        open(true);
+    }
+
+    private void open(boolean isSmooth) {
+        int finalLeft = -mRange;
+        if (isSmooth) {
+            //开始动画
+            if (mDragHelper.smoothSlideViewTo(mFrontView, finalLeft, 0)) {
+                ViewCompat.postInvalidateOnAnimation(SwipeLayout.this);
+            }
+        } else {
+            layoutContent(true);
+        }
+
+    }
 
     /**
      * 持续动画
@@ -311,21 +313,16 @@ public class SwipeLayout extends FrameLayout {
      * 在这里加上一些回调，以方便外部使用的时候可以回调
      */
 
-    /**
-     * 定义三种状态
-     */
-    public enum Status {
-        Close, Open, Draging;
-    }
 
-    private Status status = Status.Close;
+
+    private SwipeLayoutStatus status = SwipeLayoutStatus.Close;
     private OnSwipeLayoutListener swipeLayoutListener;
 
-    public Status getStatus() {
+    public SwipeLayoutStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(SwipeLayoutStatus status) {
         this.status = status;
     }
 
@@ -383,15 +380,15 @@ public class SwipeLayout extends FrameLayout {
         }
 
         //记录上一次的状态
-        Status preStatus = status;
+        SwipeLayoutStatus preStatus = status;
         //更新当前状态
         status = updateStatus();
         if (preStatus != status && swipeLayoutListener != null) {
-            if (status == Status.Close) {
+            if (status == SwipeLayoutStatus.Close) {
                 swipeLayoutListener.onClose(this);
-            } else if (status == Status.Open) {
+            } else if (status == SwipeLayoutStatus.Open) {
                 swipeLayoutListener.onOpen(this);
-            } else if (status == Status.Draging) {
+            } else if (status == SwipeLayoutStatus.Draging) {
                 swipeLayoutListener.onDraging(this);
             }
         }
@@ -402,17 +399,17 @@ public class SwipeLayout extends FrameLayout {
      *
      * @return
      */
-    private Status updateStatus() {
+    public  SwipeLayoutStatus updateStatus() {
         //得到view的左边位置
         int left = mFrontView.getLeft();
         if (left == 0) {
             //如果位置是0,就是关闭状态
-            return Status.Close;
+            return SwipeLayoutStatus.Close;
         } else if (left == -mRange) {
             //如果左侧边距是后view的宽度负值,状态为开
-            return Status.Open;
+            return SwipeLayoutStatus.Open;
         }
-        return Status.Draging;
+        return SwipeLayoutStatus.Draging;
     }
 
 

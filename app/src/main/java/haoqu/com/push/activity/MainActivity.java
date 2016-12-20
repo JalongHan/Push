@@ -16,7 +16,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.ArrayList;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
@@ -26,6 +27,9 @@ import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 import haoqu.com.push.listener.MsgItemClickListener;
 import haoqu.com.push.listener.MsgItemOnTouchListener;
+import haoqu.com.push.status.SwipeLayoutStatus;
+import haoqu.com.push.view.SwipeLayout;
+import haoqu.com.push.viewholder.MsgViewHolder;
 
 public class MainActivity extends AppCompatActivity implements MsgItemClickListener, MsgItemOnTouchListener {
 
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private MsgReceiver mMsgReceiver;
 
 
-    private List<String> mStringList;
+    private List<MsgBean> mMsgList;
     private RecyclerView mReceyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter mMessageAdapter;
@@ -51,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStringList = new ArrayList<>();
+        //先从数据库取一下数据.
+        mMsgList = SQLite.select().from(MsgBean.class).queryList();
         initViews();
         setListeners();
 
@@ -109,9 +114,8 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         mReceyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         mReceyclerView.setLayoutManager(linearLayoutManager);
-        mMessageAdapter = new MessageAdapter(mStringList, this);
+        mMessageAdapter = new MessageAdapter(mMsgList, this);
         mReceyclerView.setAdapter(mMessageAdapter);
-
 
 
     }
@@ -123,6 +127,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     @Override
     public void ItemOnTouch(View v, int position, MotionEvent event) {
+
+
+
+
+
         Log.i(TAG, "onTouch: itemView");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -149,8 +158,22 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
                 //判断是否继续传递信号
                 if (moveX < 20 && moveY < 20) {
                     Log.i(TAG, "onTouchEvent: return false");
-                   startActivity(new Intent(MainActivity.this,ContentActivity.class));
-//                            return true; //不再执行后面的事件，在这句前可写要执行的触摸相关代码。点击事件是发生在触摸弹起后
+
+                    MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder(mReceyclerView.getChildAt(position));
+
+                    SwipeLayout swipeLayout = msgViewHolder.getmSwipeLayout();
+
+                    Log.i(TAG, "ItemOnTouch: " + swipeLayout.getStatus().toString());
+
+
+                    if (SwipeLayoutStatus.Open.equals(swipeLayout.getStatus())) {
+                        swipeLayout.close(true);
+                    } else {
+                        startActivity(new Intent(MainActivity.this, ContentActivity.class));
+                    }
+
+
+//
 
                 }
 
@@ -166,10 +189,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         @Override
         public void onReceive(Context context, Intent intent) {
             String alert = intent.getStringExtra(Consts.KEY_MESSAGE);
-
-            mStringList.add(0, alert);
+            MsgBean msgBean = new MsgBean();
+            msgBean.setContent(alert);
+            mMsgList.add(0, msgBean);
             mMessageAdapter.notifyDataSetChanged();
-            saveMsg(alert);
+            saveMsg(msgBean);
             Log.i(TAG, "onReceive: " + alert);
         }
 
@@ -177,13 +201,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     /**
      * 保存到数据库
-     * @param alert
+     *
+     * @param msgBean
      */
-    private void saveMsg(String alert) {
+    private void saveMsg(MsgBean msgBean) {
 
-        MsgBean msgBean = new MsgBean();
-        msgBean.setContent(alert);
-        msgBean.setMark(false);
         msgBean.save();
 
     }

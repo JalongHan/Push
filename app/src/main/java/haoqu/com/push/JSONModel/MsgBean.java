@@ -14,12 +14,12 @@ import haoqu.com.push.datebase.MsgDateBase;
 public class MsgBean extends BaseModel {
 
     @PrimaryKey(autoincrement = true)
-    private Long id;
+    Long id;
     @Column
-    private String content;
+    String content;
     //是否未读,当值为空时,默认给值1代表true,表示未读状态
     @Column(defaultValue = "1")
-    private Boolean mark;
+    Boolean mark;
 
 
     public MsgBean() {

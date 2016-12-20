@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import haoqu.com.push.JSONModel.MsgBean;
 import haoqu.com.push.R;
 import haoqu.com.push.listener.MsgItemClickListener;
 import haoqu.com.push.listener.MsgItemOnTouchListener;
@@ -21,7 +22,7 @@ import haoqu.com.push.viewholder.MsgViewHolder;
 
 public class MessageAdapter extends RecyclerView.Adapter {
     private Context context;
-    private List<String> actionMessageBean;
+    private List<MsgBean> mMsgBean;
     private String TAG = "MessageAdapter";
 
     private MsgItemClickListener mMsgItemClickListener;
@@ -31,8 +32,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
 
 
-    public MessageAdapter(List<String> actionMessageBean, Context context) {
-        this.actionMessageBean = actionMessageBean;
+    public MessageAdapter(List<MsgBean> mMsgBean, Context context) {
+        this.mMsgBean = mMsgBean;
         this.context = context;
     }
 
@@ -49,7 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        String text = actionMessageBean.get(position);
+        String text = mMsgBean.get(position).getContent();
         Log.i(TAG, "onBindViewHolder: "+text);
         ((MsgViewHolder) holder).getmText().setText(text);
 
@@ -57,7 +58,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return actionMessageBean.size();
+        return mMsgBean.size();
     }
 
     /**

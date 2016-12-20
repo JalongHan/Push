@@ -34,12 +34,6 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
     private final SwipeLayout mSwipeLayout;
 
 
-    private float DownX;
-    private float DownY;
-    private float moveX;
-    private float moveY;
-    private long currentMS;
-
     private MsgItemClickListener mMsgItemClickListener;
     private MsgItemOnTouchListener mMsgItemOnTouchListener;
 
@@ -60,51 +54,6 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
         mDeleteMsg.setOnClickListener(this);
         mMarkedAsRead.setOnClickListener(this);
         mSwipeLayout.setOnTouchListener(this);
-//        mSwipeLayout.setOnTouchListener(this);
-//        mSwipeLayout.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Log.i(TAG, "onTouch: itemView");
-//
-//
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        Log.i(TAG, "onTouchEvent: down");
-//                        DownX = event.getX();//float DownX
-//                        DownY = event.getY();//float DownY
-//                        moveX = 0;
-//                        moveY = 0;
-//                        currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
-//
-//
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        Log.i(TAG, "onTouchEvent: move");
-//                        moveX += Math.abs(event.getX() - DownX);//X轴距离
-//                        moveY += Math.abs(event.getY() - DownY);//y轴距离
-//                        DownX = event.getX();
-//                        DownY = event.getY();
-////                return false;
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        Log.i(TAG, "onTouchEvent: up");
-//                        long moveTime = System.currentTimeMillis() - currentMS;//移动时间
-//                        //判断是否继续传递信号
-//                        if (moveTime < 200 && (moveX < 20 || moveY < 20)) {
-//                            Log.i(TAG, "onTouchEvent: return false");
-//
-////                            return true; //不再执行后面的事件，在这句前可写要执行的触摸相关代码。点击事件是发生在触摸弹起后
-//
-//                        }
-//
-//                        break;
-//                }
-//
-//                return false;
-//            }
-//        });
-
-
 
 
     }
@@ -145,6 +94,9 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
         return mTitle;
     }
 
+    public SwipeLayout getmSwipeLayout() {
+        return mSwipeLayout;
+    }
 
     @Override
     public void onClick(View v) {
