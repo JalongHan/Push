@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private float moveX;
     private float moveY;
 
+    //划开状态的recyclerView的position
+    private int mOpenPosition;
+    //当前划开状态的swipelayout
+    private SwipeLayout mSwipeLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +62,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
         //先从数据库取一下数据.
         mMsgList = SQLite.select().from(MsgBean.class).queryList();
+        Log.i(TAG, "onCreate: " + mMsgList.size());
+
+
         initViews();
         setListeners();
-
         initReceiver();
 
 
@@ -129,9 +136,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     public void ItemOnTouch(View v, int position, MotionEvent event) {
 
 
-
-
-
         Log.i(TAG, "onTouch: itemView");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -141,7 +145,15 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
                 moveX = 0;
                 moveY = 0;
 //                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
+                if (mOpenPosition != position) {
+                    Log.i(TAG, "mOpenPosition: " + mOpenPosition);
+                    if(null != mSwipeLayout){
+                        mSwipeLayout.close(true);
+                    }
 
+
+
+                }
 
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -156,12 +168,15 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
                 Log.i(TAG, "onTouchEvent: up");
 //                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
                 //判断是否继续传递信号
+
+                MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder(mReceyclerView.getChildAt(position));
+
+                SwipeLayout swipeLayout = msgViewHolder.getmSwipeLayout();
+
                 if (moveX < 20 && moveY < 20) {
+                    //判断为点击
                     Log.i(TAG, "onTouchEvent: return false");
 
-                    MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder(mReceyclerView.getChildAt(position));
-
-                    SwipeLayout swipeLayout = msgViewHolder.getmSwipeLayout();
 
                     Log.i(TAG, "ItemOnTouch: " + swipeLayout.getStatus().toString());
 
@@ -173,8 +188,11 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
                     }
 
 
-//
-
+                } else {
+                    //判断为划动了
+                    //记录下Open的position,swipelayout
+                    mOpenPosition = position;
+                    mSwipeLayout = swipeLayout;
                 }
 
                 break;
