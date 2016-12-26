@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         setListeners();
         initReceiver();
 
-
     }
 
     private void initReceiver() {
@@ -107,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
         mMessageAdapter.setOnItemClickListener(this);
         mMessageAdapter.setItemOnTouchListener(this);
+
+
+
 
     }
 
