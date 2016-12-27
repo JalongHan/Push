@@ -9,8 +9,8 @@
     tools:context="haoqu.com.push.activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <android.support.v7.widget.RecyclerView
+    <haoqu.com.push.view.SwpieRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></haoqu.com.push.view.SwpieRecyclerView>
 </RelativeLayout>

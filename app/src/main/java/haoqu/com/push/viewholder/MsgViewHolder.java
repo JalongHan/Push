@@ -1,7 +1,6 @@
 package haoqu.com.push.viewholder;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,15 +10,14 @@ import android.widget.TextView;
 
 import haoqu.com.push.R;
 import haoqu.com.push.listener.MsgItemClickListener;
-import haoqu.com.push.listener.MsgItemOnTouchListener;
-import haoqu.com.push.view.SwipeLayout;
+import haoqu.com.push.view.SwipeItemLayout;
 
 /**
  * 消息列表的viewholder
  * Created by apple on 16/12/13.
  */
 
-public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,View.OnTouchListener{
+public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
 
     private final String TAG = "MsgViewHolder";
     private final ImageView mHeadIcon;
@@ -31,13 +29,13 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
     private final Button mMarkedAsRead;
     private final Button mDeleteMsg;
     private final LinearLayout mSwipeView;
-    private final SwipeLayout mSwipeLayout;
+    private final SwipeItemLayout mSwipeLayout;
 
 
     private MsgItemClickListener mMsgItemClickListener;
-    private MsgItemOnTouchListener mMsgItemOnTouchListener;
+//    private MsgItemOnTouchListener mMsgItemOnTouchListener;
 
-    public MsgViewHolder(View itemView, MsgItemClickListener msgItemClickListener ,MsgItemOnTouchListener mMsgItemOnTouchListener) {
+    public MsgViewHolder(View itemView, MsgItemClickListener msgItemClickListener ) {
         super(itemView);
         mHeadIcon = (ImageView) itemView.findViewById(R.id.headIcon);
         mTitle = (TextView) itemView.findViewById(R.id.title);
@@ -48,12 +46,12 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
         mMarkedAsRead = (Button) itemView.findViewById(R.id.markedAsRead);
         mDeleteMsg = (Button) itemView.findViewById(R.id.deleteMsg);
         mSwipeView = (LinearLayout) itemView.findViewById(R.id.swipeView);
-        mSwipeLayout = (SwipeLayout) itemView.findViewById(R.id.SwipeLayout);
+        mSwipeLayout = (SwipeItemLayout) itemView.findViewById(R.id.SwipeLayout);
         this.mMsgItemClickListener = msgItemClickListener;
-        this.mMsgItemOnTouchListener = mMsgItemOnTouchListener;
+//        this.mMsgItemOnTouchListener = mMsgItemOnTouchListener;
         mDeleteMsg.setOnClickListener(this);
         mMarkedAsRead.setOnClickListener(this);
-        mSwipeLayout.setOnTouchListener(this);
+//        mSwipeLayout.setOnTouchListener(this);
 
 
     }
@@ -94,7 +92,7 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
         return mTitle;
     }
 
-    public SwipeLayout getmSwipeLayout() {
+    public SwipeItemLayout getmSwipeLayout() {
         return mSwipeLayout;
     }
 
@@ -106,11 +104,11 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener ,V
     }
 
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if(null != mMsgItemOnTouchListener){
-            mMsgItemOnTouchListener.ItemOnTouch(v,getPosition(),event);
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onTouch(View v, MotionEvent event) {
+//        if(null != mMsgItemOnTouchListener){
+//            mMsgItemOnTouchListener.ItemOnTouch(v,getPosition(),event);
+//        }
+//        return false;
+//    }
 }

@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<haoqu.com.push.view.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
     >
 
-    <haoqu.com.push.view.SwipeLayout
+    <haoqu.com.push.view.SwipeItemLayout
         android:id="@+id/SwipeLayout"
         android:layout_width="match_parent"
         android:layout_height="86dp">
+
+
+
+        <LinearLayout
+            android:id="@+id/swipeView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            >
+
+            <Button
+                android:id="@+id/markedAsRead"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="标为已读" />
+
+            <Button
+                android:id="@+id/deleteMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="删除" />
+
+        </LinearLayout>
+
+
 
         <RelativeLayout
             android:id="@+id/Content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:background="@color/white"
             >
 
             <ImageView
@@ -89,35 +115,15 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/swipeView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
-
-            <Button
-                android:id="@+id/markedAsRead"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="标为已读" />
-
-            <Button
-                android:id="@+id/deleteMsg"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="删除" />
-
-        </LinearLayout>
 
 
 
-    </haoqu.com.push.view.SwipeLayout>
+
+    </haoqu.com.push.view.SwipeItemLayout>
 
 
 
 
 
 
-</RelativeLayout>
+</haoqu.com.push.view.SwipeItemLayout>

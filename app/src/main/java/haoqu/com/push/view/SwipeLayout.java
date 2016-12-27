@@ -294,7 +294,7 @@ public class SwipeLayout extends FrameLayout {
      * @param frontRect
      * @return
      */
-    private Rect computeBackViewRect(Rect frontRect) {
+    public Rect computeBackViewRect(Rect frontRect) {
         int left = frontRect.right;
         return new Rect(left, 0, left + mRange, 0 + mHeight);
     }
@@ -306,6 +306,9 @@ public class SwipeLayout extends FrameLayout {
         }
         return new Rect(left, 0, left + mWidth, 0 + mHeight);
     }
+
+
+
 
 
     /**

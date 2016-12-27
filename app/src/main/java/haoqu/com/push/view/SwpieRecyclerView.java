@@ -7,8 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
-import haoqu.com.push.status.SwipeLayoutStatus;
+import android.view.ViewConfiguration;
 
 /**
  * Created by apple on 16/12/26.
@@ -35,42 +34,67 @@ public class SwpieRecyclerView extends RecyclerView {
 
     public SwpieRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         int action = ev.getActionMasked();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                isChildHandle = false;
-                //记录下手指按下的位置
-                startY = ev.getY();
-                startX = ev.getX();
-                distanceX = 0;
-                distanceY = 0;
-                //获取按下的那个view
-                int position = pointToPosition((int) startX, (int) startY);
-                touchView = getChildAt(position);
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                isChildHandle = false;
+//                //记录下手指按下的位置
+//                startY = ev.getY();
+//                startX = ev.getX();
+//                distanceX = 0;
+//                distanceY = 0;
+//                //获取按下的那个view
+//                int position = pointToPosition((int) startX, (int) startY);
+//                touchView = getChildAt(position);
+//
+//                if (hasChildOpen()) {
+//                    //如果触摸的不是打开的那个View,关闭所有View,并且拦截所有事件.
+//                    if (touchView != null && touchView instanceof SwipeItemLayout && ((SwipeItemLayout) touchView).isOpen()) {
+//                        isChildHandle = true;//将事件交给child
+//                    } else {
+//                        closeAllSwipeItem();
+//                        return false;
+//                    }
+//                }
+//
+//                break;
+//            //禁用多点触控
+//            case MotionEvent.ACTION_POINTER_DOWN:
+//                return false;
+        if (action == MotionEvent.ACTION_DOWN) {
+            isChildHandle = false;
+            // 记录手指按下的位置
+            startY = ev.getY();
+            startX = ev.getX();
+            distanceX = 0;
+            distanceY = 0;
+            // 获取按下的那个View
+            int position = pointToPosition((int) startX, (int) startY);
+            touchView = getChildAt(position);
 
-                if (hasChildOpen()) {
-                    //如果触摸的不是打开的那个View,关闭所有View,并且拦截所有事件.
-                    if (touchView != null && touchView instanceof SwipeLayout) {
-                        isChildHandle = true;//将事件交给child
-                    } else {
-                        closeAllSwipeItem();
-                        return false;
-                    }
+            if (hasChildOpen()) {
+                // 如果触摸的不是打开的那个View, 关闭所有View，并且拦截所有事件
+                if (touchView != null && touchView instanceof SwipeItemLayout && ((SwipeItemLayout) touchView).isOpen()) {
+                    isChildHandle = true; // 将事件交给child！
+                } else {
+                    closeAllSwipeItem();
+                    return false;
                 }
-
-                break;
-            //禁用多点触控
-            case MotionEvent.ACTION_POINTER_DOWN:
-                return false;
-
-
+            }
+        }
+        // 禁用多点触控
+        if (action == MotionEvent.ACTION_POINTER_DOWN) {
+            return false;
         }
 
+
         return super.dispatchTouchEvent(ev);
+
     }
 
     //处理侧划和菜单冲突
@@ -87,6 +111,7 @@ public class SwpieRecyclerView extends RecyclerView {
                 float endX = e.getX();
                 //Math.abs取绝对值
                 distanceX = Math.abs(endX - startX);
+                distanceY = Math.abs(endY - startY);
 
                 //如果child已经持有事件,那么 不拦截它的事件,直接return false;
                 if (isChildHandle) {
@@ -103,21 +128,24 @@ public class SwpieRecyclerView extends RecyclerView {
 
             case MotionEvent.ACTION_UP:
                 //state != 1 没有滑动过,关闭打开的菜单
-                if(touchView != null && touchView instanceof SwipeLayout){
-                    SwipeLayout swipeLayout = (SwipeLayout) this.touchView;
-                    if(swipeLayout.getStatus().equals(SwipeLayoutStatus.Open)){
-                        if(distanceX<touchSlop && distanceY <touchSlop){
-                            swipeLayout.close(true);
+                if (touchView != null && touchView instanceof SwipeLayout) {
+                    SwipeItemLayout swipeItem = (SwipeItemLayout) this.touchView;
+                    if (swipeItem.isOpen() && swipeItem.getState() != 1) {
+                        if (distanceX < touchSlop && distanceY < touchSlop) {
+                            swipeItem.close();
                         }
-
-
+                        Rect rect = swipeItem.getMenuRect();
+                        //如果不是点击在菜单上,拦截点击事件.
+                        if (!(startX > rect.left && startX < rect.right && startY > touchView.getTop() && startY < touchView.getBottom())) {
+                            return true;
+                        }
 
 
                     }
 
 
-
                 }
+                break;
 
         }
 
@@ -132,8 +160,8 @@ public class SwpieRecyclerView extends RecyclerView {
         final int count = getChildCount();
         for (int i = count - 1; i >= 0; i--) {
             final View child = getChildAt(i);
-            if (child != null && child instanceof SwipeLayout) {
-                ((SwipeLayout) child).close(true);
+            if (child != null && child instanceof SwipeItemLayout) {
+                ((SwipeItemLayout) child).close();
             }
         }
 
@@ -148,8 +176,8 @@ public class SwpieRecyclerView extends RecyclerView {
         final int count = getChildCount();
         for (int i = count - 1; i >= 0; i--) {
             final View child = getChildAt(i);
-            if (child != null && child instanceof SwipeLayout) {
-                if (((SwipeLayout) child).getStatus().equals(SwipeLayoutStatus.Open)) {
+            if (child != null && child instanceof SwipeItemLayout) {
+                if (((SwipeItemLayout) child).isOpen()) {
                     return true;
                 }
             }

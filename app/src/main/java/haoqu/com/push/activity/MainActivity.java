@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -26,12 +25,8 @@ import haoqu.com.push.JSONModel.MsgBean;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 import haoqu.com.push.listener.MsgItemClickListener;
-import haoqu.com.push.listener.MsgItemOnTouchListener;
-import haoqu.com.push.status.SwipeLayoutStatus;
-import haoqu.com.push.view.SwipeLayout;
-import haoqu.com.push.viewholder.MsgViewHolder;
 
-public class MainActivity extends AppCompatActivity implements MsgItemClickListener, MsgItemOnTouchListener {
+public class MainActivity extends AppCompatActivity implements MsgItemClickListener {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -45,15 +40,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter mMessageAdapter;
 
-    private float DownX;
-    private float DownY;
-    private float moveX;
-    private float moveY;
-
-    //划开状态的recyclerView的position
-    private int mOpenPosition;
-    //当前划开状态的swipelayout
-    private SwipeLayout mSwipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         });
 
         mMessageAdapter.setOnItemClickListener(this);
-        mMessageAdapter.setItemOnTouchListener(this);
+//        mMessageAdapter.setItemOnTouchListener(this);
 
 
 
@@ -132,75 +118,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     @Override
     public void onItemClick(View view, int position) {
         Log.i(TAG, "onItemClick: " + position);
-    }
-
-    @Override
-    public void ItemOnTouch(View v, int position, MotionEvent event) {
-
-
-        Log.i(TAG, "onTouch: itemView");
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Log.i(TAG, "onTouchEvent: down");
-                DownX = event.getX();//float DownX
-                DownY = event.getY();//float DownY
-                moveX = 0;
-                moveY = 0;
-//                currentMS = System.currentTimeMillis();//long currentMS     获取系统时间
-                if (mOpenPosition != position) {
-                    Log.i(TAG, "mOpenPosition: " + mOpenPosition);
-                    if(null != mSwipeLayout){
-                        mSwipeLayout.close(true);
-                    }
-
-
-
-                }
-
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.i(TAG, "onTouchEvent: move");
-                moveX += Math.abs(event.getX() - DownX);//X轴距离
-                moveY += Math.abs(event.getY() - DownY);//y轴距离
-                DownX = event.getX();
-                DownY = event.getY();
-//                return false;
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.i(TAG, "onTouchEvent: up");
-//                long moveTime = System.currentTimeMillis() - currentMS;//移动时间
-                //判断是否继续传递信号
-
-                MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder(mReceyclerView.getChildAt(position));
-
-                SwipeLayout swipeLayout = msgViewHolder.getmSwipeLayout();
-
-                if (moveX < 20 && moveY < 20) {
-                    //判断为点击
-                    Log.i(TAG, "onTouchEvent: return false");
-
-
-                    Log.i(TAG, "ItemOnTouch: " + swipeLayout.getStatus().toString());
-
-
-                    if (SwipeLayoutStatus.Open.equals(swipeLayout.getStatus())) {
-                        swipeLayout.close(true);
-                    } else {
-                        startActivity(new Intent(MainActivity.this, ContentActivity.class));
-                    }
-
-
-                } else {
-                    //判断为划动了
-                    //记录下Open的position,swipelayout
-                    mOpenPosition = position;
-                    mSwipeLayout = swipeLayout;
-                }
-
-                break;
-        }
-
-
     }
 
 
