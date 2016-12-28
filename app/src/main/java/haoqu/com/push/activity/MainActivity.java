@@ -24,9 +24,8 @@ import haoqu.com.push.Consts;
 import haoqu.com.push.JSONModel.MsgBean;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
-import haoqu.com.push.listener.MsgItemClickListener;
 
-public class MainActivity extends AppCompatActivity implements MsgItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
         });
 
-        mMessageAdapter.setOnItemClickListener(this);
+//        mMessageAdapter.setOnItemClickListener(this);
 //        mMessageAdapter.setItemOnTouchListener(this);
 
 
@@ -115,10 +114,10 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        Log.i(TAG, "onItemClick: " + position);
-    }
+//    @Override
+//    public void onItemClick(View view, int position) {
+//        Log.i(TAG, "onItemClick: " + position);
+//    }
 
 
     class MsgReceiver extends BroadcastReceiver {

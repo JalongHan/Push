@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -18,6 +19,7 @@ public class SwipeItemLayout extends FrameLayout {
     private View content;
     private boolean isOpen;
     private int currentState;
+    private final String TAG = "SwipeItemLayout";
 
     public SwipeItemLayout(Context context) {
         this(context, null);
@@ -32,6 +34,8 @@ public class SwipeItemLayout extends FrameLayout {
 
         dragHelper = ViewDragHelper.create(this, rightCallback);
     }
+
+
 
     @Override
     protected void onFinishInflate() {
@@ -73,12 +77,15 @@ public class SwipeItemLayout extends FrameLayout {
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             //x轴移动速度大于菜单一半,或者已经移动到菜单的一半之后,展开菜单.
             if (isOpen) {
+                Log.i(TAG, "onViewReleased: "+"执行了"+isOpen);
                 if (xvel > menu.getWidth() || -content.getLeft() < menu.getWidth() / 2) {
+
                     close();
                 } else {
                     open();
                 }
             } else {
+                Log.i(TAG, "onViewReleased: "+"执行了"+isOpen);
                 if (-xvel > menu.getWidth() || -content.getLeft() > menu.getWidth() / 2) {
                     open();
                 }else {
@@ -105,17 +112,23 @@ public class SwipeItemLayout extends FrameLayout {
         }
     };
 
-    public void open() {
-        dragHelper.smoothSlideViewTo(content, -menu.getWidth(), 0);
-        isOpen = false;
-        invalidate();
-    }
 
     public void close() {
         dragHelper.smoothSlideViewTo(content, 0, 0);
-        isOpen = true;
+        isOpen = false;
+        Log.i(TAG, "close: "+isOpen);
         invalidate();
     }
+
+
+    public void open() {
+        dragHelper.smoothSlideViewTo(content, -menu.getWidth(), 0);
+        isOpen = true;
+        Log.i(TAG, "open: "+isOpen);
+        invalidate();
+    }
+
+
 
 
     public boolean isOpen() {

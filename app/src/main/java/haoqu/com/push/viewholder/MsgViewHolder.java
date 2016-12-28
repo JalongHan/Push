@@ -4,20 +4,17 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import haoqu.com.push.R;
-import haoqu.com.push.listener.MsgItemClickListener;
-import haoqu.com.push.view.SwipeItemLayout;
 
 /**
  * 消息列表的viewholder
  * Created by apple on 16/12/13.
  */
 
-public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
+public class MsgViewHolder extends ViewHolder{
 
     private final String TAG = "MsgViewHolder";
     private final ImageView mHeadIcon;
@@ -28,14 +25,12 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
     private final RelativeLayout mContent;
     private final Button mMarkedAsRead;
     private final Button mDeleteMsg;
-    private final LinearLayout mSwipeView;
-    private final SwipeItemLayout mSwipeLayout;
 
 
-    private MsgItemClickListener mMsgItemClickListener;
+//    private MsgItemClickListener mMsgItemClickListener;
 //    private MsgItemOnTouchListener mMsgItemOnTouchListener;
 
-    public MsgViewHolder(View itemView, MsgItemClickListener msgItemClickListener ) {
+    public MsgViewHolder(View itemView) {
         super(itemView);
         mHeadIcon = (ImageView) itemView.findViewById(R.id.headIcon);
         mTitle = (TextView) itemView.findViewById(R.id.title);
@@ -45,12 +40,10 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
         mContent = (RelativeLayout) itemView.findViewById(R.id.Content);
         mMarkedAsRead = (Button) itemView.findViewById(R.id.markedAsRead);
         mDeleteMsg = (Button) itemView.findViewById(R.id.deleteMsg);
-        mSwipeView = (LinearLayout) itemView.findViewById(R.id.swipeView);
-        mSwipeLayout = (SwipeItemLayout) itemView.findViewById(R.id.SwipeLayout);
-        this.mMsgItemClickListener = msgItemClickListener;
+//        this.mMsgItemClickListener = msgItemClickListener;
 //        this.mMsgItemOnTouchListener = mMsgItemOnTouchListener;
-        mDeleteMsg.setOnClickListener(this);
-        mMarkedAsRead.setOnClickListener(this);
+//        mDeleteMsg.setOnClickListener(this);
+//        mMarkedAsRead.setOnClickListener(this);
 //        mSwipeLayout.setOnTouchListener(this);
 
 
@@ -80,10 +73,6 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
         return mPoint;
     }
 
-    public LinearLayout getmSwipeView() {
-        return mSwipeView;
-    }
-
     public TextView getmText() {
         return mText;
     }
@@ -92,16 +81,13 @@ public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
         return mTitle;
     }
 
-    public SwipeItemLayout getmSwipeLayout() {
-        return mSwipeLayout;
-    }
 
-    @Override
-    public void onClick(View v) {
-        if (null != mMsgItemClickListener) {
-            mMsgItemClickListener.onItemClick(v, getPosition());
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+//        if (null != mMsgItemClickListener) {
+//            mMsgItemClickListener.onItemClick(v, getPosition());
+//        }
+//    }
 
 
 //    @Override
