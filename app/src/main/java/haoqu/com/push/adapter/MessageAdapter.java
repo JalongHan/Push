@@ -11,6 +11,7 @@ import java.util.List;
 
 import haoqu.com.push.JSONModel.MsgBean;
 import haoqu.com.push.R;
+import haoqu.com.push.listener.MsgItemClickListener;
 import haoqu.com.push.viewholder.MsgViewHolder;
 
 /**
@@ -23,11 +24,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private List<MsgBean> mMsgBean;
     private String TAG = "MessageAdapter";
 
-//    private MsgItemClickListener mMsgItemClickListener;
+    private MsgItemClickListener mMsgItemClickListener;
 //    private MsgItemOnTouchListener mMsgItemOnTouchListener;
-
-
-
 
 
     public MessageAdapter(List<MsgBean> mMsgBean, Context context) {
@@ -43,14 +41,21 @@ public class MessageAdapter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, parent, false);
 
 
-        return new MsgViewHolder(view);
+        return new MsgViewHolder(view,mMsgItemClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        String text = mMsgBean.get(position).getContent();
+        MsgBean msgBean = mMsgBean.get(position);
+        String text = msgBean.getContent();
         Log.i(TAG, "onBindViewHolder: "+text);
         ((MsgViewHolder) holder).getmText().setText(text);
+
+        if(msgBean.getMark()){
+            ((MsgViewHolder) holder).getmPoint().setEnabled(true);
+        }else {
+            ((MsgViewHolder) holder).getmPoint().setEnabled(false);
+        }
 
     }
 
@@ -59,16 +64,25 @@ public class MessageAdapter extends RecyclerView.Adapter {
         return mMsgBean.size();
     }
 
+//    public void removeItem(int position){
+//        mMsgBean.get(position).delete();
+//        mMsgBean.remove(position);
+//        notifyDataSetChanged();
+//    }
+
+
     /**
      * 设置item的监听
      * @param listener
      */
-//    public void setOnItemClickListener(MsgItemClickListener listener){
-//        this.mMsgItemClickListener = listener;
-//    }
+    public void setOnItemClickListener(MsgItemClickListener listener){
+        this.mMsgItemClickListener = listener;
+    }
 
 //    public void setItemOnTouchListener(MsgItemOnTouchListener listener){
 //        this.mMsgItemOnTouchListener = listener;
 //    }
+
+
 
 }

@@ -19,7 +19,7 @@ public class MsgBean extends BaseModel {
     String content;
     //是否未读,当值为空时,默认给值1代表true,表示未读状态
     @Column(defaultValue = "1")
-    Boolean mark;
+    Boolean mark = true;
 
 
     public MsgBean() {

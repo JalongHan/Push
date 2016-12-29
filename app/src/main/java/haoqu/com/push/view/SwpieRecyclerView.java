@@ -107,6 +107,7 @@ public class SwpieRecyclerView extends RecyclerView {
                 if (touchView != null && touchView instanceof SwipeItemLayout) {
                     SwipeItemLayout swipeItem = (SwipeItemLayout) this.touchView;
                     if (swipeItem.isOpen() && swipeItem.getState() != 1) {
+
                         if(distanceX < touchSlop && distanceY < touchSlop) {
                             swipeItem.close();
                         }

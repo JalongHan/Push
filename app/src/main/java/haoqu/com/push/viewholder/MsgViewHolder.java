@@ -8,13 +8,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import haoqu.com.push.R;
+import haoqu.com.push.listener.MsgItemClickListener;
 
 /**
  * 消息列表的viewholder
  * Created by apple on 16/12/13.
  */
 
-public class MsgViewHolder extends ViewHolder{
+public class MsgViewHolder extends ViewHolder implements View.OnClickListener{
 
     private final String TAG = "MsgViewHolder";
     private final ImageView mHeadIcon;
@@ -27,10 +28,10 @@ public class MsgViewHolder extends ViewHolder{
     private final Button mDeleteMsg;
 
 
-//    private MsgItemClickListener mMsgItemClickListener;
+    private MsgItemClickListener mMsgItemClickListener;
 //    private MsgItemOnTouchListener mMsgItemOnTouchListener;
 
-    public MsgViewHolder(View itemView) {
+    public MsgViewHolder(View itemView,MsgItemClickListener msgItemClickListener) {
         super(itemView);
         mHeadIcon = (ImageView) itemView.findViewById(R.id.headIcon);
         mTitle = (TextView) itemView.findViewById(R.id.title);
@@ -40,12 +41,12 @@ public class MsgViewHolder extends ViewHolder{
         mContent = (RelativeLayout) itemView.findViewById(R.id.Content);
         mMarkedAsRead = (Button) itemView.findViewById(R.id.markedAsRead);
         mDeleteMsg = (Button) itemView.findViewById(R.id.deleteMsg);
-//        this.mMsgItemClickListener = msgItemClickListener;
+        this.mMsgItemClickListener = msgItemClickListener;
 //        this.mMsgItemOnTouchListener = mMsgItemOnTouchListener;
-//        mDeleteMsg.setOnClickListener(this);
-//        mMarkedAsRead.setOnClickListener(this);
-//        mSwipeLayout.setOnTouchListener(this);
-
+        mDeleteMsg.setOnClickListener(this);
+        mMarkedAsRead.setOnClickListener(this);
+        mContent.setOnClickListener(this);
+        itemView.setOnClickListener(this);
 
     }
 
@@ -73,6 +74,7 @@ public class MsgViewHolder extends ViewHolder{
         return mPoint;
     }
 
+
     public TextView getmText() {
         return mText;
     }
@@ -82,12 +84,12 @@ public class MsgViewHolder extends ViewHolder{
     }
 
 
-//    @Override
-//    public void onClick(View v) {
-//        if (null != mMsgItemClickListener) {
-//            mMsgItemClickListener.onItemClick(v, getPosition());
-//        }
-//    }
+    @Override
+    public void onClick(View v) {
+        if (null != mMsgItemClickListener) {
+            mMsgItemClickListener.onItemClick(v, getPosition());
+        }
+    }
 
 
 //    @Override

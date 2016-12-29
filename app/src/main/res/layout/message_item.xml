@@ -78,7 +78,7 @@
             android:layout_below="@id/title"
             android:layout_marginRight="17dp"
             android:layout_marginTop="4dp"
-            android:src="@drawable/redpoint" />
+            android:src="@drawable/asmark_selector" />
 
         <TextView
             android:id="@+id/text"

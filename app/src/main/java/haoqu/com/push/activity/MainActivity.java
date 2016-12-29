@@ -22,10 +22,12 @@ import java.util.List;
 import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.Consts;
 import haoqu.com.push.JSONModel.MsgBean;
+import haoqu.com.push.JSONModel.MsgBean_Table;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
+import haoqu.com.push.listener.MsgItemClickListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MsgItemClickListener {
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //先从数据库取一下数据.
-        mMsgList = SQLite.select().from(MsgBean.class).queryList();
+        mMsgList = SQLite.select().from(MsgBean.class).orderBy(MsgBean_Table.id,false).queryList();
         Log.i(TAG, "onCreate: " + mMsgList.size());
 
 
@@ -89,10 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-//        mMessageAdapter.setOnItemClickListener(this);
+        mMessageAdapter.setOnItemClickListener(this);
 //        mMessageAdapter.setItemOnTouchListener(this);
-
-
 
 
     }
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mReceyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mReceyclerView.setLayoutManager(linearLayoutManager);
         mMessageAdapter = new MessageAdapter(mMsgList, this);
         mReceyclerView.setAdapter(mMessageAdapter);
@@ -114,10 +115,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public void onItemClick(View view, int position) {
-//        Log.i(TAG, "onItemClick: " + position);
-//    }
+    @Override
+    public void onItemClick(View view, int position) {
+        switch (view.getId()) {
+            case R.id.Content:
+                startActivity(new Intent(MainActivity.this, ContentActivity.class));
+                break;
+            //点击删除时
+            case R.id.deleteMsg:
+                Log.i(TAG, "onItemClick: "+position);
+//                mMsgList.remove(position);
+                mMsgList.get(position).delete();
+                mMsgList.remove(position);
+                mMessageAdapter.notifyDataSetChanged();
+
+                Log.i(TAG, "onItemClick: 1"+mMsgList.size());
+                break;
+            //点击标为已读时
+            case R.id.markedAsRead:
+                MsgBean mMsg = mMsgList.get(position);
+                mMsg.setMark(false);
+                mMessageAdapter.notifyDataSetChanged();
+                mMsg.save();
+                break;
+
+        }
+    }
 
 
     class MsgReceiver extends BroadcastReceiver {
