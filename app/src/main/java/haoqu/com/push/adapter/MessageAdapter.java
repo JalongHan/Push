@@ -52,9 +52,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
         ((MsgViewHolder) holder).getmText().setText(text);
 
         if(msgBean.getMark()){
-            ((MsgViewHolder) holder).getmPoint().setEnabled(true);
+            ((MsgViewHolder) holder).getmPoint().setVisibility(View.VISIBLE);
         }else {
-            ((MsgViewHolder) holder).getmPoint().setEnabled(false);
+            ((MsgViewHolder) holder).getmPoint().setVisibility(View.GONE);
         }
 
     }

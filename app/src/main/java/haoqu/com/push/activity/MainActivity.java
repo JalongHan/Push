@@ -26,6 +26,7 @@ import haoqu.com.push.JSONModel.MsgBean_Table;
 import haoqu.com.push.R;
 import haoqu.com.push.adapter.MessageAdapter;
 import haoqu.com.push.listener.MsgItemClickListener;
+import haoqu.com.push.viewholder.MsgViewHolder;
 
 public class MainActivity extends AppCompatActivity implements MsgItemClickListener {
 
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, final int position) {
         switch (view.getId()) {
             case R.id.Content:
                 startActivity(new Intent(MainActivity.this, ContentActivity.class));
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 //                mMsgList.remove(position);
                 mMsgList.get(position).delete();
                 mMsgList.remove(position);
-                mMessageAdapter.notifyDataSetChanged();
+                mMessageAdapter.notifyItemRemoved(position);
 
                 Log.i(TAG, "onItemClick: 1"+mMsgList.size());
                 break;
@@ -135,7 +136,13 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
             case R.id.markedAsRead:
                 MsgBean mMsg = mMsgList.get(position);
                 mMsg.setMark(false);
-                mMessageAdapter.notifyDataSetChanged();
+//                mMessageAdapter.notifyDataSetChanged();
+//                mMessageAdapter.notifyItemChanged(position);
+
+                MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder(mReceyclerView.getChildAt(position));
+                msgViewHolder.getmPoint().setVisibility(View.GONE);
+
+//
                 mMsg.save();
                 break;
 
@@ -151,7 +158,9 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
             MsgBean msgBean = new MsgBean();
             msgBean.setContent(alert);
             mMsgList.add(0, msgBean);
-            mMessageAdapter.notifyDataSetChanged();
+//            mMessageAdapter.notifyDataSetChanged();
+            mMessageAdapter.notifyItemRangeInserted(0,1);
+            mReceyclerView.smoothScrollToPosition(0);
             saveMsg(msgBean);
             Log.i(TAG, "onReceive: " + alert);
         }
