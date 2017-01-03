@@ -104,7 +104,10 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.more);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mReceyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -118,19 +121,19 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     @Override
     public void onItemClick(View view, final int position) {
+        Log.i(TAG, "onItemClick: "+position);
         switch (view.getId()) {
             case R.id.Content:
                 startActivity(new Intent(MainActivity.this, ContentActivity.class));
                 break;
             //点击删除时
             case R.id.deleteMsg:
-                Log.i(TAG, "onItemClick: "+position);
+
 //                mMsgList.remove(position);
                 mMsgList.get(position).delete();
                 mMsgList.remove(position);
                 mMessageAdapter.notifyItemRemoved(position);
 
-                Log.i(TAG, "onItemClick: 1"+mMsgList.size());
                 break;
             //点击标为已读时
             case R.id.markedAsRead:
@@ -139,7 +142,10 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 //                mMessageAdapter.notifyDataSetChanged();
 //                mMessageAdapter.notifyItemChanged(position);
 
-                MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder(mReceyclerView.getChildAt(position));
+
+
+
+                MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder((View) view.getParent().getParent());
                 msgViewHolder.getmPoint().setVisibility(View.GONE);
 
 //
