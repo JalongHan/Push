@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="haoqu.com.push.activity.MainActivity">
 
 
@@ -12,7 +11,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -23,6 +23,15 @@
             android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/Content_search"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="right"
+            android:src="@drawable/search"
+            style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
+            />
 
 
 

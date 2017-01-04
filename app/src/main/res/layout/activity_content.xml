@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="haoqu.com.push.activity.ContentActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/Content_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:paddingTop="25dp">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:text="Message"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:src="@drawable/search"/>
+
+    </android.support.v7.widget.Toolbar>
 
 
     <LinearLayout
@@ -72,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_button"
+        android:layout_below="@id/Content_toolbar"
         android:background="@drawable/content_blue_bg">
 
 
@@ -134,6 +162,8 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/Content_writer"
                 android:layout_margin="15dp"
+                android:scrollbars="vertical"
+
                 android:text="    My father was a self-taught mandolin player. He was one of the best string instrument players in our town. He could not read music, but if he heard a tune a few times, he could play it. When he was younger, he was a member of a small country music band. They would play at local dances and on a few occasions would play for the local radio station. He often told us how he had auditioned and earned a position in a band that featured Patsy Cline as their lead singer. He told the family that after he was hired he never went back. Dad was a very religious man. He stated that there was a lot of drinking and cursing the day of his audition and he did not want to be around that type of environment.
 
             Occasionally, Dad would get out his mandolin and play for the family. We three children: Trisha, Monte and I, George Jr., would often sing along. Songs such as the Tennessee Waltz, Harbor Lights and around Christmas time, the well-known rendition of Silver Bells. , Silver Bells, its Christmas time in the city
@@ -142,11 +172,8 @@
             sing. Another song that was often shared in our house was a song that accompanied the
             Walt Disney series: Davey Crockett. Dad only had to hear the song twice before he
             learned it well enough to play it.  Davey Crockett, King of the Wild Frontier"
-
                 android:textColor="@color/text_content"
-                android:textSize="14sp"
-                android:scrollbars="vertical"
-                />
+                android:textSize="14sp" />
 
 
         </RelativeLayout>

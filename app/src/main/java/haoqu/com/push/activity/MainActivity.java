@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private RecyclerView mReceyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter mMessageAdapter;
+    private AppCompatImageButton mContentSearch;
 
 
     @Override
@@ -48,8 +50,9 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //先从数据库取一下数据.
-        mMsgList = SQLite.select().from(MsgBean.class).orderBy(MsgBean_Table.id,false).queryList();
+        mMsgList = SQLite.select().from(MsgBean.class).orderBy(MsgBean_Table.id, false).queryList();
         Log.i(TAG, "onCreate: " + mMsgList.size());
 
 
@@ -103,10 +106,27 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
      */
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.setTitle("");
+//        setSupportActionBar(toolbar);
 //        ActionBar actionbar = getSupportActionBar();
 //        actionbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.more);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: Navigation");
+            }
+        });
+        mContentSearch = (AppCompatImageButton) findViewById(R.id.Content_search);
+
+        mContentSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: ContentSearch");
+            }
+        });
+
+
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mReceyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -121,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     @Override
     public void onItemClick(View view, final int position) {
-        Log.i(TAG, "onItemClick: "+position);
+        Log.i(TAG, "onItemClick: " + position);
         switch (view.getId()) {
             case R.id.Content:
                 startActivity(new Intent(MainActivity.this, ContentActivity.class));
@@ -142,9 +162,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 //                mMessageAdapter.notifyDataSetChanged();
 //                mMessageAdapter.notifyItemChanged(position);
 
-
-
-
                 MsgViewHolder msgViewHolder = (MsgViewHolder) mReceyclerView.getChildViewHolder((View) view.getParent().getParent());
                 msgViewHolder.getmPoint().setVisibility(View.GONE);
 
@@ -156,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     }
 
 
+
     class MsgReceiver extends BroadcastReceiver {
 
         @Override
@@ -165,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
             msgBean.setContent(alert);
             mMsgList.add(0, msgBean);
 //            mMessageAdapter.notifyDataSetChanged();
-            mMessageAdapter.notifyItemRangeInserted(0,1);
+            mMessageAdapter.notifyItemRangeInserted(0, 1);
             mReceyclerView.smoothScrollToPosition(0);
             saveMsg(msgBean);
             Log.i(TAG, "onReceive: " + alert);
@@ -217,5 +235,13 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    //重写此方法让menu无效,不显示
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
     }
 }
