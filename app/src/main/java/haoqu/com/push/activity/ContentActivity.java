@@ -1,13 +1,17 @@
 package haoqu.com.push.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.R;
 
 public class ContentActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class ContentActivity extends AppCompatActivity {
     private TextView mContentTime;
     private TextView mContentContent;
     private RelativeLayout mActivityContent;
+    private Toolbar mContentToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +60,30 @@ public class ContentActivity extends AppCompatActivity {
         //使textview可滑动
         mContentContent.setMovementMethod(new ScrollingMovementMethod());
         mActivityContent = (RelativeLayout) findViewById(R.id.activity_content);
+        mContentToolbar = (Toolbar) findViewById(R.id.Content_toolbar);
+        mContentToolbar.setTitle("");
+        setSupportActionBar(mContentToolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        mContentToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+
 }

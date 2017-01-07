@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.jpush.android.api.JPushInterface;
 import haoqu.com.push.R;
 
 /**
@@ -80,5 +81,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
 }
 

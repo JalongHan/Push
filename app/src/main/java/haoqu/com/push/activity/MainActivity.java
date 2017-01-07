@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,9 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 
     private static final String TAG = "MainActivity";
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+
     //消息广播
     private MsgReceiver mMsgReceiver;
 
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     private RecyclerView mReceyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter mMessageAdapter;
-    private AppCompatImageButton mContentSearch;
+    private ImageButton mContentSearch;
+
 
 
     @Override
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         initViews();
         setListeners();
         initReceiver();
+
 
     }
 
@@ -78,26 +81,20 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
      * 设置监听
      */
     private void setListeners() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//                VolleyGetData();
-                //开启服务去后台,一直获取数据.
-//                startService(new Intent(MainActivity.this, HeartBeatService.class));
-
-                startActivity(new Intent(MainActivity.this, ContentActivity.class));
-
-
-            }
-
-
-        });
 
         mMessageAdapter.setOnItemClickListener(this);
-//        mMessageAdapter.setItemOnTouchListener(this);
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: Navigation");
+            }
+        });
+        mContentSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: ContentSearch");
+            }
+        });
 
     }
 
@@ -111,24 +108,32 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
 //        ActionBar actionbar = getSupportActionBar();
 //        actionbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.more);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+        mContentSearch = (ImageButton) findViewById(R.id.Content_search);
+        //通过反射拿到mNavButtonView的高度,赋给右边的搜索按钮
+        toolbar.post(new Runnable() {
             @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick: Navigation");
+            public void run() {
+                try {
+                    Class tb = toolbar.getClass();
+                    Field navButton = tb.getDeclaredField("mNavButtonView");
+                    navButton.setAccessible(true);
+
+                    ImageButton a = (ImageButton) navButton.get(toolbar);
+                    Log.i(TAG, "run: " + a.getMeasuredHeight());
+
+                    mContentSearch.setMinimumHeight(a.getMeasuredHeight());
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
-        mContentSearch = (AppCompatImageButton) findViewById(R.id.Content_search);
 
-        mContentSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick: ContentSearch");
-            }
-        });
-
-
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        //recyclerview先显示一个空白的
         mReceyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -173,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
     }
 
 
-
     class MsgReceiver extends BroadcastReceiver {
 
         @Override
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
             mMsgList.add(0, msgBean);
 //            mMessageAdapter.notifyDataSetChanged();
             mMessageAdapter.notifyItemRangeInserted(0, 1);
-            mReceyclerView.smoothScrollToPosition(0);
+//            mReceyclerView.smoothScrollToPosition(0);
             saveMsg(msgBean);
             Log.i(TAG, "onReceive: " + alert);
         }
@@ -227,21 +231,21 @@ public class MainActivity extends AppCompatActivity implements MsgItemClickListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    //重写此方法让menu无效,不显示
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        invalidateOptionsMenu();
-        return super.onPrepareOptionsMenu(menu);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
